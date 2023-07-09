@@ -5,8 +5,9 @@ const createQuestion = `
     question,
     questions_explanation,
     questions_comments,
+    reviewername
 
-  ) VALUES ($1, $2, $3)
+  ) VALUES ($1, $2, $3,$4)
   RETURNING *
 `;
 const editQuestionQuery = `
@@ -14,8 +15,9 @@ const editQuestionQuery = `
   SET question = $1,
       questions_explanation = $2,
       questions_comments = $3,
+      reviewername = $4,
       updated_at = current_timestamp
-  WHERE questions_id = $4
+  WHERE questions_id = $5
   RETURNING *;
 `;
 const deleteQuestionQuery = `

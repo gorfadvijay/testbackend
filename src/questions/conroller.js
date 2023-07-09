@@ -16,11 +16,12 @@ const GetQuestions = (req, res) => {
 };
 
 const addQuestion = (req, res) => {
-  const { question, questions_explanation, questions_comments } = req.body;
+  const { question, questions_explanation, questions_comments, reviewername } =
+    req.body;
 
   pool.query(
-    "INSERT INTO questions (question, questions_explanation, questions_comments) VALUES ($1, $2, $3) RETURNING *",
-    [question, questions_explanation, questions_comments],
+    "INSERT INTO questions (question, questions_explanation, questions_comments,reviewername) VALUES ($1, $2, $3,$4) RETURNING *",
+    [question, questions_explanation, questions_comments, reviewername],
     (err, result) => {
       if (err) {
         console.error("Error creating question:", err);
@@ -44,13 +45,20 @@ const addQuestion = (req, res) => {
 
 const editQuestion = (req, res) => {
   const questions_id = req.params.id;
-  const { question, questions_explanation, questions_comments } = req.body;
+  const { question, questions_explanation, questions_comments, reviewername } =
+    req.body;
 
   console.log("questions_id", questions_id);
 
   pool.query(
     query.editQuestionQuery,
-    [question, questions_explanation, questions_comments, questions_id],
+    [
+      question,
+      questions_explanation,
+      questions_comments,
+      reviewername,
+      questions_id,
+    ],
     (err, result) => {
       if (err) {
         console.error("Error editing question:", err);
